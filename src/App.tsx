@@ -18,6 +18,7 @@ function App() {
     useEffect(() => {
         const interval = setInterval(() => {
             if (!streak.clickedToday) return;
+
             const nextTime = new Date().getMinutes();
             if (streak.lastTimeClicked < nextTime) {
                 resetClicked();
@@ -29,6 +30,20 @@ function App() {
             clearInterval(interval);
         };
     }, [streak]);
+
+    const handlerResetStreak = () => {
+        const reset = window.confirm(
+            "Are you sure you want to reset the streak counter?"
+        );
+
+        if (reset) {
+            setStreak({
+                value: 0,
+                clickedToday: false,
+                lastTimeClicked: new Date().getMinutes(),
+            });
+        }
+    }
 
     return (
         <div className="p-16 flex flex-col items-center gap-4 relative">
@@ -44,23 +59,12 @@ function App() {
                     }))
                 }
                 disabled={streak.clickedToday}
-                className={`bg-green-300 rounded p-2 cursor-pointer hover:bg-green-500 transition-all disabled:bg-green-100 disabled:text-green-700`}
+                className={`bg-green-300 rounded p-2 cursor-pointer hover:bg-green-500 transition-all disabled:bg-green-100 disabled:text-green-700 disabled:cursor-not-allowed`}
             >
                 {streak.clickedToday ? "Congrats!" : "Mark today as complete"}
             </button>
             <button
-                onClick={() => {
-                    const reset = window.confirm(
-                        "Are you sure you want to reset the streak counter?"
-                    );
-                    if (reset) {
-                        setStreak({
-                            value: 0,
-                            clickedToday: false,
-                            lastTimeClicked: new Date().getMinutes(),
-                        });
-                    }
-                }}
+                onClick={handlerResetStreak}
                 className="bg-red-700 text-red-50 rounded p-2 cursor-pointer hover:bg-red-900 transition-all absolute right-16 top-16"
             >
                 Reset streak
