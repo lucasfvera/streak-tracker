@@ -1,6 +1,7 @@
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useEffect } from "react";
 import { MOTIVATIONAL_PHRASES } from "./phrases";
+import { CityGame } from "./components/Canvas/Canvas";
 
 function App() {
     const [streak, setStreak] = useLocalStorage("current-streak", {
@@ -46,7 +47,7 @@ function App() {
     }
 
     return (
-        <div className="p-16 flex flex-col items-center gap-4 relative">
+        <div className="p-16 flex flex-col items-center gap-4 relative h-full">
             <h1 className="text-2xl font-bold">Streak Tracker</h1>
             <p>Your streak is: {streak.value}</p>
             <p>{MOTIVATIONAL_PHRASES[streak.value]}</p>
@@ -69,6 +70,7 @@ function App() {
             >
                 Reset streak
             </button>
+            <CityGame />
         </div>
     );
 }
